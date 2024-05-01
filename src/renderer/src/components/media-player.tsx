@@ -33,7 +33,7 @@ function Thumbnail(): JSX.Element {
 
 function MediaControls(): JSX.Element {
   return (
-    <div className="flex basis-3/5 flex-col items-center gap-4 pb-4">
+    <div className="flex basis-3/5 flex-col items-center gap-4 pb-2">
       <div className="flex gap-4">
         <Button size={'icon'} variant={'ghost'}>
           <SkipBack />
@@ -46,9 +46,9 @@ function MediaControls(): JSX.Element {
         </Button>
       </div>
       <div className="relative w-4/5">
-        <Slider defaultValue={[33]} max={100} step={1} disabled />
-        <span className="absolute left-0 text-sm text-muted-foreground">3:45</span>
-        <span className="absolute right-0 text-sm text-muted-foreground">3:45</span>
+        <Slider defaultValue={[0]} max={100} step={1} disabled className="mb-2" />
+        <span className="absolute left-0 text-xs text-muted-foreground">3:45</span>
+        <span className="absolute right-0 text-xs text-muted-foreground">3:45</span>
       </div>
     </div>
   )

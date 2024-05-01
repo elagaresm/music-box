@@ -20,13 +20,13 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>): JS
               </Link>
             </Button>
             <Button asChild variant="ghost" className="w-full justify-start gap-2">
-              <Link to="/artistas">
+              <Link to="/artists">
                 <MicVocal size={24} />
                 Artistas
               </Link>
             </Button>
             <Button asChild variant="ghost" className="w-full justify-start gap-2">
-              <Link to="/albumes">
+              <Link to="/albums">
                 <Library size={24} />
                 Álbumes
               </Link>

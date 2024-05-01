@@ -67,11 +67,11 @@ const songs = [
 
 export default function Home(): JSX.Element {
   return (
-    <div className="h-full w-full px-4 py-6 overflow-hidden">
+    <div className="h-full w-full overflow-hidden px-4 py-6">
       <div>
         <TypographyH2>
           Populares
-          <TypographyMuted className="font-normal my-1">Artistas del momento</TypographyMuted>
+          <TypographyMuted className="my-1 font-normal">Artistas del momento</TypographyMuted>
         </TypographyH2>
       </div>
 
@@ -79,17 +79,17 @@ export default function Home(): JSX.Element {
         opts={{
           align: 'start'
         }}
-        className="max-w-[80%] mx-auto mt-5"
+        className="mx-auto mt-5 max-w-[80%]"
       >
         <CarouselContent className="-ml-6">
           {artists.map((artist, index) => (
             <CarouselItem key={index} className="basis-1/2">
-              <div className="px-2 group">
+              <div className="group px-2">
                 <Card className="relative overflow-hidden rounded-full">
-                  <CardContent className="overflow-hidden flex-col aspect-square items-center justify-center p-0 z-10">
+                  <CardContent className="z-10 aspect-square flex-col items-center justify-center overflow-hidden p-0">
                     <img
                       src={artist.cover}
-                      className="object-cover group-hover:scale-105 transition-all duration-500"
+                      className="object-cover transition-all duration-200 group-hover:scale-105"
                     />
                     {/* <div className="z-100 dark:bg-black bg-white absolute bottom-0 left-0 right-0 h-[20%] text-center py-2">
                       {artist.name}
@@ -97,7 +97,7 @@ export default function Home(): JSX.Element {
                   </CardContent>
                 </Card>
               </div>
-              <div className="flex justify-center mt-2">{artist.name}</div>
+              <div className="mt-2 flex justify-center">{artist.name}</div>
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -108,7 +108,7 @@ export default function Home(): JSX.Element {
       <div className="mt-12">
         <TypographyH2>
           Canciones
-          <TypographyMuted className="font-normal my-1">
+          <TypographyMuted className="my-1 font-normal">
             Canciones escuchadas recientemente
           </TypographyMuted>
         </TypographyH2>
@@ -118,20 +118,20 @@ export default function Home(): JSX.Element {
         opts={{
           align: 'start'
         }}
-        className="max-w-[80%] mx-auto mt-5"
+        className="mx-auto mt-5 max-w-[80%]"
       >
         <CarouselContent className="-ml-6">
           {songs.map((song, index) => (
             <CarouselItem key={index} className="basis-1/3">
-              <div className="px-2 group">
+              <div className="group px-2">
                 <Card>
-                  <CardContent className="overflow-hidden rounded flex aspect-square items-center justify-center p-0">
-                    <img className="group-hover:scale-105 duration-500" src={song.cover} />
+                  <CardContent className="flex aspect-square items-center justify-center overflow-hidden rounded p-0">
+                    <img className="duration-200 group-hover:scale-105" src={song.cover} />
                   </CardContent>
-                  <CardFooter className="border-t py-1 px-2">
+                  <CardFooter className="border-t px-2 py-1">
                     <div
                       className={
-                        'w-full whitespace-nowrap mx-auto overflow-hidden text-center flex-col justify-center align-center'
+                        'align-center mx-auto w-full flex-col justify-center overflow-hidden whitespace-nowrap text-center'
                       }
                     >
                       <p className={`w-full ${song.name.length > 13 && 'moving-text'}`}>

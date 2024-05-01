@@ -5,8 +5,10 @@ import App from './App'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import ErrorPage from './pages/error-page'
 import Home from './pages/home'
-import Albumes from './pages/albumes'
-import Artistas from './pages/Artistas/artistas'
+import Albums from './pages/album/albums'
+import Artists, { loader as artistsLoader } from './pages/artist/artists'
+import Artist, { loader as artistLoader } from './pages/artist/artist'
+import Album, { loader as albumLoader } from './pages/album/album'
 
 const router = createHashRouter([
   {
@@ -15,8 +17,10 @@ const router = createHashRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
-      { path: '/artistas', element: <Artistas /> },
-      { path: '/albumes', element: <Albumes /> }
+      { path: '/artists', element: <Artists />, loader: artistsLoader },
+      { path: '/artist/:artistName', element: <Artist />, loader: artistLoader },
+      { path: '/albums', element: <Albums />, loader: artistsLoader },
+      { path: '/artist/:artistName/album/:albumName', element: <Album />, loader: albumLoader }
     ]
   }
 ])
