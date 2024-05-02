@@ -30,7 +30,8 @@ const artists = [
   },
   {
     name: '21 Savage',
-    cover: 'https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png'
+    cover: 'https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png',
+    test: `O`
   }
 ]
 

@@ -3,10 +3,16 @@ import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { AudioLines, Crown, Library, MicVocal, TrendingUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
-
-const queue = ['Levitating', 'Save Your Tears', 'Positions', "What's Next", 'Blinding Lights']
+import { useQueueStore } from '@/store/queueStore'
+import { Song } from '@/env'
+import { usePremiumQueueStore } from '@/store/premium-queue-store'
 
 export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>): JSX.Element {
+  const queue = useQueueStore<Song[]>((state) => state.queue)
+  const premiumQueue = usePremiumQueueStore<Song[]>((state) => state.premiumQueue)
+
+  console.log('queue:', queue)
+
   return (
     <div className={cn('', className)}>
       <div className="space-y-4 py-4">
@@ -41,14 +47,14 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>): JS
 
           <ScrollArea className="h-[300px] px-1">
             <div className="space-y-1 p-2  ">
-              {queue.map((song, index) => (
+              {premiumQueue.map((song, index) => (
                 <Button
                   key={index}
                   variant="ghost"
                   className="w-full justify-start gap-2 first-of-type:text-primary"
                 >
                   <AudioLines size={16} />
-                  {song}
+                  {song.name}
                   <Crown size={16} />
                 </Button>
               ))}
@@ -56,7 +62,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>): JS
               {queue.map((song, index) => (
                 <Button key={index} variant="ghost" className="w-full justify-start gap-2">
                   <AudioLines size={16} />
-                  {song}
+                  {song.name}
                 </Button>
               ))}
             </div>

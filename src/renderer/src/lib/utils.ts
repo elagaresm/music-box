@@ -1,8 +1,13 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-export function cn(...inputs: ClassValue[]): string {
+export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export function getCoverBlob(coverPath: Buffer): string {
+  const blob = new Blob([coverPath], { type: 'image/jpeg' })
+  return URL.createObjectURL(blob)
 }
 
 export function secondsToMinutes(seconds: number): string {
@@ -43,8 +48,3 @@ export const uppercaseAlphabet = [
   'Y',
   'Z'
 ]
-
-export function getCoverBlob(coverPath: Buffer): string {
-  const blob = new Blob([coverPath], { type: 'image/jpeg' })
-  return URL.createObjectURL(blob)
-}

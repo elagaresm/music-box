@@ -1,11 +1,4 @@
 import { TypographyH3 } from '@/components/typography'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from '@/components/ui/carousel'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 import {
@@ -16,12 +9,12 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { cn, uppercaseAlphabet } from '@/lib/utils'
 import { ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
 import { Artist as ArtistType } from '@/env'
 import { Button } from '@/components/ui/button'
+import AlphabetCarousel from '@/components/alphabet-carousel'
 
 const Albums = (): JSX.Element => {
   const [query, setQuery] = useState('A')
@@ -91,35 +84,9 @@ const Albums = (): JSX.Element => {
       <p className="mt-4 text-center text-sm text-muted-foreground">
         {query === '#' ? 'Albumes con numero(s)' : `Albumes que inicien con "${query}"`}
       </p>
-      <AlphabetCarousel className="block" onClick={handleLetterClick} />
+      <AlphabetCarousel className="block" onClick={handleLetterClick} query={query} />
     </div>
   )
 }
 
 export default Albums
-
-function AlphabetCarousel({
-  onClick,
-  className
-}: {
-  onClick: (letter: string) => void
-  className?: string
-}): JSX.Element {
-  return (
-    <Carousel className={cn('mx-auto mt-auto w-96', className)}>
-      <CarouselContent>
-        {uppercaseAlphabet.map((letter) => (
-          <CarouselItem
-            onClick={() => onClick(letter)}
-            className="basis-1/5 cursor-pointer text-center hover:text-primary"
-            key={letter}
-          >
-            {letter}
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
-  )
-}

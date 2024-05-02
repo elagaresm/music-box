@@ -9,17 +9,12 @@ import {
 } from '@/components/ui/table'
 import { Album as AlbumType, Song as SongType } from '@/env'
 import { getCoverBlob, secondsToMinutes } from '@/lib/utils'
-import { Clock, Crown, Ellipsis } from 'lucide-react'
+import { Clock } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
+import { SongDropDownMenu } from './song-dropdown-menu'
+import { useQueueStore } from '@/store/queueStore'
+import { usePremiumQueueStore } from '@/store/premium-queue-store'
 
 export async function loader({ params }): Promise<AlbumType | null> {
   try {
@@ -79,7 +74,8 @@ type SongWithDuration = SongType & {
 
 function Songs({ songs }: { songs: SongType[] }): JSX.Element {
   const [results, setResults] = useState<SongWithDuration | []>([])
-  const songsCopy = [...songs]
+  const addToQueue = useQueueStore((state) => state.addToQueue)
+  const addToPremiumQueue = usePremiumQueueStore((state) => state.addToPremiumQueue)
 
   async function asyncGetDuration(song: SongType): Promise<SongWithDuration> {
     const result = await window.api.getSongDuration(song.path)
@@ -89,15 +85,13 @@ function Songs({ songs }: { songs: SongType[] }): JSX.Element {
 
   useEffect(() => {
     ;(async (): Promise<void> => {
-      const promises = songsCopy.map(asyncGetDuration)
+      const promises = songs.map(asyncGetDuration)
 
       const allResults = await Promise.all(promises)
 
       setResults(allResults as SongWithDuration)
     })()
   }, [songs])
-
-  console.log(results)
 
   return (
     <>
@@ -107,31 +101,15 @@ function Songs({ songs }: { songs: SongType[] }): JSX.Element {
             <TableCell className="font-medium">{song.name}</TableCell>
             <TableCell>{song.artistName}</TableCell>
             <TableCell className="text-right">{secondsToMinutes(song.duration)}</TableCell>
-            <TableCell className="">
-              <SongDropDownMenu />
+            <TableCell>
+              <SongDropDownMenu
+                addToQueue={() => addToQueue(song)}
+                addToPremiumQueue={() => addToPremiumQueue(song)}
+              />
             </TableCell>
           </TableRow>
         )
       })}
     </>
-  )
-}
-
-function SongDropDownMenu(): JSX.Element {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Ellipsis className="ml-auto opacity-0 duration-200 group-hover:opacity-100" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>Añadir a cola</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-primary hover:!text-primary">
-          <Crown className="mr-2 h-4 w-4" />
-          <span>Premium</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>Normal</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
   )
 }
