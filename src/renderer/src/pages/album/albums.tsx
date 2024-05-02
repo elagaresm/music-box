@@ -21,6 +21,7 @@ import { ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
 import { Artist as ArtistType } from '@/env'
+import { Button } from '@/components/ui/button'
 
 const Albums = (): JSX.Element => {
   const [query, setQuery] = useState('A')
@@ -68,9 +69,11 @@ const Albums = (): JSX.Element => {
                     <TableCell className="font-medium">{album.name}</TableCell>
                     <TableCell>{artist.name}</TableCell>
                     <TableCell className="flex justify-end text-right">
-                      <Link to={`/artist/${artist.name}/album/${album.name}`}>
-                        <ChevronRight size={18} />
-                      </Link>
+                      <Button asChild variant={'ghost'}>
+                        <Link to={`/artist/${artist.name}/album/${album.name}`}>
+                          <ChevronRight size={18} />
+                        </Link>
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))

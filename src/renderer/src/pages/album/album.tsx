@@ -1,7 +1,6 @@
 import { TypographyH3, TypographyMuted } from '@/components/typography'
 import {
   Table,
-  TableCaption,
   TableHeader,
   TableRow,
   TableHead,
@@ -10,7 +9,7 @@ import {
 } from '@/components/ui/table'
 import { Album as AlbumType, Song as SongType } from '@/env'
 import { getCoverBlob, secondsToMinutes } from '@/lib/utils'
-import { Clock, Ellipsis } from 'lucide-react'
+import { Clock, Crown, Ellipsis } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import {
@@ -109,7 +108,7 @@ function Songs({ songs }: { songs: SongType[] }): JSX.Element {
             <TableCell>{song.artistName}</TableCell>
             <TableCell className="text-right">{secondsToMinutes(song.duration)}</TableCell>
             <TableCell className="">
-              <Ellipsis className="ml-auto opacity-0 duration-200 group-hover:opacity-100" />
+              <SongDropDownMenu />
             </TableCell>
           </TableRow>
         )
@@ -125,12 +124,13 @@ function SongDropDownMenu(): JSX.Element {
         <Ellipsis className="ml-auto opacity-0 duration-200 group-hover:opacity-100" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>Añadir a cola</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+        <DropdownMenuItem className="text-primary hover:!text-primary">
+          <Crown className="mr-2 h-4 w-4" />
+          <span>Premium</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem>Normal</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

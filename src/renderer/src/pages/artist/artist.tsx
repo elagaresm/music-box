@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 import { Artist as ArtistType, Album as AlbumType } from '@/env'
 import { TypographyH2, TypographyH3 } from '@/components/typography'
 import {
@@ -80,20 +80,24 @@ const Artist = (): JSX.Element => {
           >
             <CarouselContent>
               {artist.albums.map((album: AlbumType, index: number) => (
-                <div key={index}>
-                  <CarouselItem className="basis-1/2">
-                    <div className="group px-2">
-                      <Card className="overflow-hidden">
-                        <CardContent className="flex aspect-square items-center justify-center rounded p-0">
-                          <img
-                            className="aspect-square w-48 duration-200 group-hover:scale-105"
-                            src={getCoverBlob(album.cover)}
-                          />
-                        </CardContent>
-                      </Card>
+                <div key={index} className="group">
+                  <Link to={`/artist/${artist.name}/album/${album.name}`}>
+                    <CarouselItem className="basis-1/2">
+                      <div className="group px-2">
+                        <Card className="overflow-hidden">
+                          <CardContent className="flex aspect-square items-center justify-center rounded p-0">
+                            <img
+                              className="aspect-square w-48 duration-200 group-hover:scale-105"
+                              src={getCoverBlob(album.cover)}
+                            />
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                    <div className="py-2 text-center text-sm text-muted-foreground group-hover:text-foreground">
+                      {album.name}
                     </div>
-                  </CarouselItem>
-                  <div className="py-2 text-center text-sm text-muted-foreground">{album.name}</div>
+                  </Link>
                 </div>
               ))}
             </CarouselContent>

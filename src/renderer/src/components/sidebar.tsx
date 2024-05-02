@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { AudioLines, Library, MicVocal, TrendingUp } from 'lucide-react'
+import { AudioLines, Crown, Library, MicVocal, TrendingUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const queue = ['Levitating', 'Save Your Tears', 'Positions', "What's Next", 'Blinding Lights']
@@ -40,21 +40,22 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>): JS
           {/* Cola */}
 
           <ScrollArea className="h-[300px] px-1">
-            <div className="space-y-1 p-2">
+            <div className="space-y-1 p-2  ">
               {queue.map((song, index) => (
                 <Button
                   key={index}
                   variant="ghost"
-                  className="w-full justify-start gap-2 text-primary"
+                  className="w-full justify-start gap-2 first-of-type:text-primary"
                 >
-                  <AudioLines />
+                  <AudioLines size={16} />
                   {song}
+                  <Crown size={16} />
                 </Button>
               ))}
 
               {queue.map((song, index) => (
                 <Button key={index} variant="ghost" className="w-full justify-start gap-2">
-                  <AudioLines />
+                  <AudioLines size={16} />
                   {song}
                 </Button>
               ))}
