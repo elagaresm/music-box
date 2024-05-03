@@ -24,8 +24,9 @@ export default function AlphabetCarousel({
           <CarouselItem className="basis-1/5 text-center" key={letter}>
             <Button
               onClick={() => onClick(letter)}
-              variant={query === letter ? 'default' : 'ghost'}
-              className="w-full cursor-pointer"
+              // variant={query === letter ? 'outline' : 'ghost'}
+              variant={'ghost'}
+              className={`w-full cursor-pointer ${query === letter ? 'font-bold' : 'text-muted-foreground'}`}
             >
               {letter}
             </Button>

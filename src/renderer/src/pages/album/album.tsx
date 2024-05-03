@@ -10,10 +10,9 @@ import {
 import { Album as AlbumType, Song as SongType } from '@/env'
 import { getCoverBlob, secondsToMinutes } from '@/lib/utils'
 import { Clock } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { SongDropDownMenu } from './song-dropdown-menu'
-import { useQueueStore } from '@/store/queueStore'
+import { useNormalQueueStore } from '@/store/normal-queue-store'
 import { usePremiumQueueStore } from '@/store/premium-queue-store'
 
 export async function loader({ params }): Promise<AlbumType | null> {
@@ -68,34 +67,15 @@ const Album = (): JSX.Element => {
 
 export default Album
 
-type SongWithDuration = SongType & {
-  duration: number
-}
-
 function Songs({ songs }: { songs: SongType[] }): JSX.Element {
-  const [results, setResults] = useState<SongWithDuration | []>([])
-  const addToQueue = useQueueStore((state) => state.addToQueue)
+  const addToNormalQueue = useNormalQueueStore((state) => state.addToNormalQueue)
   const addToPremiumQueue = usePremiumQueueStore((state) => state.addToPremiumQueue)
 
-  async function asyncGetDuration(song: SongType): Promise<SongWithDuration> {
-    const result = await window.api.getSongDuration(song.path)
-    song.duration = result
-    return song
-  }
-
-  useEffect(() => {
-    ;(async (): Promise<void> => {
-      const promises = songs.map(asyncGetDuration)
-
-      const allResults = await Promise.all(promises)
-
-      setResults(allResults as SongWithDuration)
-    })()
-  }, [songs])
+  console.log(songs)
 
   return (
     <>
-      {results.map((song, index) => {
+      {songs.map((song, index) => {
         return (
           <TableRow key={index} className="group">
             <TableCell className="font-medium">{song.name}</TableCell>
@@ -103,7 +83,7 @@ function Songs({ songs }: { songs: SongType[] }): JSX.Element {
             <TableCell className="text-right">{secondsToMinutes(song.duration)}</TableCell>
             <TableCell>
               <SongDropDownMenu
-                addToQueue={() => addToQueue(song)}
+                addToQueue={() => addToNormalQueue(song)}
                 addToPremiumQueue={() => addToPremiumQueue(song)}
               />
             </TableCell>

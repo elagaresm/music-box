@@ -87,14 +87,11 @@ export default function Home(): JSX.Element {
             <CarouselItem key={index} className="basis-1/2">
               <div className="group px-2">
                 <Card className="relative overflow-hidden rounded-full">
-                  <CardContent className="z-10 aspect-square flex-col items-center justify-center overflow-hidden p-0">
+                  <CardContent className="flex aspect-square flex-col items-center justify-center overflow-hidden p-0">
                     <img
                       src={artist.cover}
                       className="object-cover transition-all duration-200 group-hover:scale-105"
                     />
-                    {/* <div className="z-100 dark:bg-black bg-white absolute bottom-0 left-0 right-0 h-[20%] text-center py-2">
-                      {artist.name}
-                    </div> */}
                   </CardContent>
                 </Card>
               </div>
@@ -102,7 +99,7 @@ export default function Home(): JSX.Element {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="" />
+        <CarouselPrevious />
         <CarouselNext />
       </Carousel>
 
@@ -124,22 +121,20 @@ export default function Home(): JSX.Element {
         <CarouselContent className="-ml-6">
           {songs.map((song, index) => (
             <CarouselItem key={index} className="basis-1/3">
-              <div className="group px-2">
+              <div className="group">
                 <Card>
                   <CardContent className="flex aspect-square items-center justify-center overflow-hidden rounded p-0">
                     <img className="duration-200 group-hover:scale-105" src={song.cover} />
                   </CardContent>
                   <CardFooter className="border-t px-2 py-1">
-                    <div
-                      className={
-                        'align-center mx-auto w-full flex-col justify-center overflow-hidden whitespace-nowrap text-center'
-                      }
-                    >
-                      <p className={`w-full ${song.name.length > 13 && 'moving-text'}`}>
+                    <div className={'align-center w-full flex-col justify-center text-center'}>
+                      <p
+                        className={`${song.name.length > 13 && 'moving-text'} w-full overflow-hidden whitespace-nowrap`}
+                      >
                         {song.name}
                       </p>
                       <p
-                        className={`text-sm text-muted-foreground ${song.artist.length > 15 && 'moving-text'}`}
+                        className={`text-sm text-muted-foreground ${song.artist.length > 15 && 'moving-text'} overflow-hidden`}
                       >
                         {song.artist}
                       </p>

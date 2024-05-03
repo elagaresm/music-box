@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-export function cn(...inputs: ClassValue[]) {
+export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs))
 }
 
@@ -48,3 +48,12 @@ export const uppercaseAlphabet = [
   'Y',
   'Z'
 ]
+
+export function getFileNameWithoutExtension(filename: string): string {
+  if (filename.indexOf('/') !== -1 || filename.indexOf('\\') !== -1) {
+    const pathSeparator = filename.indexOf('/') !== -1 ? '/' : '\\'
+    const basename = filename.split(pathSeparator).pop()
+    return basename!.split('.').slice(0, -1).join('.')
+  }
+  return filename.split('.').slice(0, -1).join('.')
+}

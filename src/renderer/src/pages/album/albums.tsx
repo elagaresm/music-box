@@ -82,7 +82,7 @@ const Albums = (): JSX.Element => {
         </Table>
       </ScrollArea>
       <p className="mt-4 text-center text-sm text-muted-foreground">
-        {query === '#' ? 'Albumes con numero(s)' : `Albumes que inicien con "${query}"`}
+        {query === '#' ? 'Albumes que inician con numero(s)' : `Albumes que inician con "${query}"`}
       </p>
       <AlphabetCarousel className="block" onClick={handleLetterClick} query={query} />
     </div>

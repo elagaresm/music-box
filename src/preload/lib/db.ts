@@ -21,6 +21,7 @@ export type Song = {
   path: string
   artistName: string
   cover: Buffer | null
+  duration: number | null
 }
 
 async function readLibrary(): Promise<string[] | null> {
@@ -124,7 +125,7 @@ export async function getAlbumByName(
     }
 
     /* Songs object */
-    const songs = getSongsFromAlbum(albumDirectoryPath, albumFiles, artistName, cover)
+    const songs = await getSongsFromAlbum(albumDirectoryPath, albumFiles, artistName, cover)
 
     return { name: albumName, songs, cover, artistName }
   } catch (err) {
@@ -133,18 +134,27 @@ export async function getAlbumByName(
   }
 }
 
-function getSongsFromAlbum(
+async function getSongsFromAlbum(
   albumDirectoryPath: string,
   files: string[],
   artistName: string,
   cover: Buffer | null
-): Song[] {
-  const songs = files
-    .filter((file: string) => file.endsWith('.mp3'))
-    .map((song) => {
+): Promise<Song[]> {
+  const mp3songs = files.filter((file: string) => file.endsWith('.mp3'))
+
+  const songs = await Promise.all(
+    mp3songs.map(async (song) => {
       const songPath = path.join(albumDirectoryPath, song)
-      return { name: getFileNameWithoutExtension(song), path: songPath, artistName, cover }
+      const duration = await getSongDuration(songPath)
+      return {
+        name: getFileNameWithoutExtension(song),
+        path: songPath,
+        artistName,
+        cover,
+        duration
+      }
     })
+  )
 
   return songs
 }
@@ -218,4 +228,8 @@ function getFileNameWithoutExtension(filename: string): string {
     return basename!.split('.').slice(0, -1).join('.')
   }
   return filename.split('.').slice(0, -1).join('.')
+}
+
+export function getParentPath(filePath: string): string {
+  return path.dirname(filePath)
 }

@@ -6,7 +6,9 @@ import {
   getAlbumByName,
   getArtistAll,
   getArtistByName,
-  getSongDuration
+  getDataFromFile,
+  getSongDuration,
+  getParentPath
 } from './lib/db'
 
 // Custom APIs for renderer
@@ -18,7 +20,9 @@ const api = {
     artistName: string,
     opts: { songs: boolean }
   ): Promise<Album | null> => getAlbumByName(albumName, artistName, opts),
-  getSongDuration: (songPath: string): Promise<number | null> => getSongDuration(songPath)
+  getSongDuration: (songPath: string): Promise<number | null> => getSongDuration(songPath),
+  getDataFromFile: (filePath: string): Promise<Buffer> => getDataFromFile(filePath),
+  getParentPath: (filePath: string): string => getParentPath(filePath)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

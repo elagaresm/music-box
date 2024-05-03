@@ -22,12 +22,12 @@ export function SongDropDownMenu({
       <DropdownMenuTrigger>
         <Ellipsis className="ml-auto opacity-0 duration-200 group-hover:opacity-100" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="mr-4">
         <DropdownMenuLabel>Añadir a cola</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-primary hover:!text-primary">
+        <DropdownMenuItem onClick={addToPremiumQueue} className="text-primary hover:!text-primary">
           <Crown className="mr-2 h-4 w-4" />
-          <span onClick={addToPremiumQueue}>Premium</span>
+          <span>Premium</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={addToQueue}>Normal</DropdownMenuItem>
       </DropdownMenuContent>

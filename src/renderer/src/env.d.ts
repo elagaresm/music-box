@@ -11,6 +11,8 @@ declare global {
         opts = { songs: boolean }
       ) => Promise<Album | null>
       getSongDuration: (songPath: string) => Promise<number | null>
+      getParentPath: (filePath: string) => string
+      getDataFromFile: (filePath: string) => Promise<Buffer>
     }
   }
 }
