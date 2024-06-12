@@ -5,8 +5,8 @@ export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs))
 }
 
-export function getCoverBlob(coverPath: Buffer): string {
-  const blob = new Blob([coverPath], { type: 'image/jpeg' })
+export function getCoverBlob(coverBuffer: Buffer): string {
+  const blob = new Blob([coverBuffer], { type: 'image/jpeg' })
   return URL.createObjectURL(blob)
 }
 

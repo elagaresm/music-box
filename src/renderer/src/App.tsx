@@ -2,14 +2,18 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Header from './components/header'
 import { Sidebar } from './components/sidebar'
 import { ThemeProvider } from './store/theme-provider'
-import MediaPlayer from './components/media-player'
 import { AudioProvider } from './store/audioContext'
-import Audio from './components/audio'
+import AudioPlayer from './components/audio'
+import { useNormalQueueStore } from './store/normal-queue-store'
+import { Song } from './env'
 
 export default function App(): JSX.Element {
   const location = useLocation()
-
   console.log(location.pathname)
+
+  const normalQueue = useNormalQueueStore<Song[]>((state) => state.normalQueue)
+
+  console.log('From app:', normalQueue)
 
   return (
     <ThemeProvider>
@@ -21,9 +25,10 @@ export default function App(): JSX.Element {
             <div className="[grid-area:2_/_2_/_3_/_3]">
               <Outlet />
             </div>
-            <MediaPlayer className="border-t [grid-area:3_/_1_/_4_/_3]" />
+            {/* <MediaPlayer className="border-t [grid-area:3_/_1_/_4_/_3]" /> */}
+            <AudioPlayer song={normalQueue[0]} className="border-t [grid-area:3_/_1_/_4_/_3]" />
           </div>
-          <Audio />
+          {/* <Audio /> */}
         </>
       </AudioProvider>
     </ThemeProvider>

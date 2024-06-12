@@ -32,7 +32,16 @@ export async function loader({ params }): Promise<AlbumType | null> {
 const Album = (): JSX.Element => {
   const album = useLoaderData() as AlbumType
 
-  console.log(album)
+  console.log('Current album:', album)
+
+  // console.log('song test:', addSongToQueueWithAlbumInfo(album.songs[0]))
+
+  // function addSongToQueueWithAlbumInfo(song) {
+  //   const obj = { ...album }
+  //   delete obj.songs
+  //   obj['song'] = song
+  //   return obj
+  // }
 
   return (
     <div className="p-4">
@@ -62,7 +71,7 @@ const Album = (): JSX.Element => {
         </Table>
       </div>
     </div>
-  )
+  ) //
 }
 
 export default Album
@@ -71,8 +80,6 @@ function Songs({ songs }: { songs: SongType[] }): JSX.Element {
   const addToNormalQueue = useNormalQueueStore((state) => state.addToNormalQueue)
   const addToPremiumQueue = usePremiumQueueStore((state) => state.addToPremiumQueue)
 
-  console.log(songs)
-
   return (
     <>
       {songs.map((song, index) => {
@@ -80,7 +87,9 @@ function Songs({ songs }: { songs: SongType[] }): JSX.Element {
           <TableRow key={index} className="group">
             <TableCell className="font-medium">{song.name}</TableCell>
             <TableCell>{song.artistName}</TableCell>
-            <TableCell className="text-right">{secondsToMinutes(song.duration)}</TableCell>
+            <TableCell onClick={() => console.log(song)} className="text-right">
+              {secondsToMinutes(song.duration)}
+            </TableCell>
             <TableCell>
               <SongDropDownMenu
                 addToQueue={() => addToNormalQueue(song)}

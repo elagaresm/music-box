@@ -1,8 +1,11 @@
 import { readdir, readFile, stat } from 'node:fs/promises'
 import path from 'node:path'
 import mm from 'music-metadata'
+import { homedir } from 'os'
 
-const LIBRARY_PATH = 'C:\\Users\\Enmanuel\\Downloads\\Songs'
+const LIBRARY_PATH = path.resolve(homedir(), 'Downloads/Songs')
+
+const IGNORED_FILES = ['.DS_Store']
 
 export type Artist = {
   name: string
@@ -46,6 +49,10 @@ export async function getArtistAll(): Promise<Artist[] | null> {
     const allArtists: Artist[] = []
 
     for (const artist of library) {
+      if (IGNORED_FILES.includes(artist)) {
+        console.log('This is the artist file:', artist)
+        continue
+      }
       const artistData = await getArtistByName(artist, { songs: false })
 
       if (artistData === null) {
