@@ -12,7 +12,7 @@
 //   )
 // }
 
-import React, { useRef, useState, ChangeEvent } from 'react'
+import React, { useRef, useState, ChangeEvent, useEffect } from 'react'
 import MediaPlayer from './media-player'
 
 interface AudioPlayerProps {
@@ -21,6 +21,7 @@ interface AudioPlayerProps {
 }
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ song, className }) => {
+  const [audioBuffer, setAudioBuffer] => useState<Buffer | null>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
